@@ -10,3 +10,36 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+/* Spinner and Checkmark Animation */
+#successIcon {
+    font-size: 3rem;
+    color: #28a745; /* Green color for success */
+}
+
+#spinner {
+    display: inline-block;
+}
+
+#checkmark {
+    display: none;
+}
+
+/* Animation to hide spinner and show checkmark */
+@keyframes spinToCheck {
+    0% {
+        opacity: 1;
+        transform: rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: rotate(360deg);
+    }
+}
+
+.spin-to-check {
+    animation: spinToCheck 0.5s ease-in-out forwards;
+}
+
+.show-checkmark {
+    display: inline-block !important;
+}
