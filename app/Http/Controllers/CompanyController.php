@@ -14,7 +14,6 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        dd(auth()->user()->is_admin);
         $companies = Company::pluck('comp_name','id');
         return view('company.index', compact('companies'));
 
@@ -55,7 +54,7 @@ class CompanyController extends Controller
     public function edit(string $id)
     {
         if (!auth()->user()->is_admin) {
-            return redirect()->route('companies.index')->with('error', 'You do not have access to create companies.');
+            return redirect()->route('companies.index')->with('error', 'You do not have access to Edit companies.');
         }
     }
 
@@ -65,7 +64,7 @@ class CompanyController extends Controller
     public function update(Request $request, string $id)
     {
         if (!auth()->user()->is_admin) {
-            return redirect()->route('companies.index')->with('error', 'You do not have access to create companies.');
+            return redirect()->route('companies.index')->with('error', 'You do not have access to Edit companies.');
         }
     }
 
@@ -75,7 +74,7 @@ class CompanyController extends Controller
     public function destroy(string $id)
     {
         if (!auth()->user()->is_admin) {
-            return redirect()->route('companies.index')->with('error', 'You do not have access to create companies.');
+            return redirect()->route('companies.index')->with('error', 'You do not have access to Delete companies.');
         }
     }
 }

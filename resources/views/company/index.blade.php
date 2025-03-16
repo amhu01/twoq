@@ -3,7 +3,9 @@
 @section('content')
     <div class="container">
         <h1>Companies</h1>
-        <a href="{{ route('companies.create') }}" class="btn btn-primary mb-3">Add Company</a>
+        @if (auth()->user()->is_admin)
+            <a href="{{ route('companies.create') }}" class="btn btn-primary mb-3">Add Company</a>
+        @endif
 
         <table id="companies-table" class="table table-bordered">
             <thead>
