@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Http\Requests\CompanyRequest;
 use user;
+use Auth;
 
 class CompanyController extends Controller
 {
@@ -14,7 +15,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::pluck('comp_name','id');
+        $companies = Company::get();
         return view('company.index', compact('companies'));
 
     }
@@ -38,6 +39,18 @@ class CompanyController extends Controller
         if (!auth()->user()->is_admin) {
             return redirect()->route('companies.index')->with('error', 'You do not have access to create companies.');
         }
+
+        $logoPath = $request->file('comp_logo') ? $request->file('comp_logo')->store('comp_logos', 'public') : null;
+
+        Company::create([
+            'comp_name' => $request->comp_name,
+            'comp_email' => $request->comp_email,
+            'comp_logo' => $logoPath,
+            'comp_website' => $request->comp_website,
+            'created_by' => Auth::id(),
+        ]);
+
+        return redirect()->route('companies.index')->with('success', 'Company created successfully.');
     }
 
     /**
@@ -45,9 +58,9 @@ class CompanyController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $company = Company::findOrFail($id); // Find the company or throw a 404 error
+        return view('company.show', compact('company'));
     }
-
     /**
      * Show the form for editing the specified resource.
      */

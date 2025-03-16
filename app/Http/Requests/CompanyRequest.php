@@ -23,16 +23,19 @@ class CompanyRequest extends FormRequest
     {
         return [
             'comp_name' => 'required|string|max:255',
-            'comp_email' => 'required|email|unique:companies,email',
+            'comp_email' => 'required|email|unique:companies,comp_email',
             'comp_logo' => 'required|image|mimes:jpeg,png,jpg,svg|dimensions:min_width=100,min_height=100',
-            'comp_website' => 'required|url|unique:companies,website',
+            'comp_website' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            'comp_logo.dimensions' => 'The company logo must be at least 100x100 pixels.',
+            'comp_name' => 'The Company Name is required.',
+            'comp_email' => 'The Company Email must be a valid email.',
+            'comp_logo' => 'The Company Logo must be at least 100x100 pixels.',
+            'comp_website' => 'The Company Website is required.',
         ];
     }
 }

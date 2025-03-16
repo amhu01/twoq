@@ -20,15 +20,20 @@
             <tbody>
                 @foreach ($companies as $company)
                     <tr>
-                        <td>{{ $company->name }}</td>
-                        <td>{{ $company->email }}</td>
+                        <td>{{ $company->comp_name }}</td>
+                        <td>{{ $company->comp_email }}</td>
                         <td>
-                            @if ($company->logo)
-                                <img src="{{ asset('storage/' . $company->logo) }}" width="100">
+                            @if ($company->comp_logo)
+                                <img src="{{ asset('storage/' . $company->comp_logo) }}" width="100">
                             @endif
                         </td>
-                        <td><a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a></td>
                         <td>
+                            <a href="{{ Str::startsWith($company->comp_website, ['http://', 'https://']) ? $company->comp_website : 'https://' . $company->comp_website }}" target="_blank">
+                                {{ $company->comp_website }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ route('companies.show', $company->id) }}" class="btn btn-sm btn-primary">View</a>
                             <a href="{{ route('companies.edit', $company->id) }}" class="btn btn-sm btn-warning">Edit</a>
                             <form action="{{ route('companies.destroy', $company->id) }}" method="POST" class="d-inline">
                                 @csrf
